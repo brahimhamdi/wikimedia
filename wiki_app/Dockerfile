@@ -1,5 +1,4 @@
 FROM		nginx		
-MAINTAINER	brahim.hamdi.consult@gmail.com
 COPY            wiki.conf      /etc/nginx/conf.d/default.conf
 RUN		apt update -y && apt install -y wget mariadb-client nano php-mbstring gzip unzip php-fpm php-xml php-intl php-mysql
 RUN		usermod -a -G www-data nginx
