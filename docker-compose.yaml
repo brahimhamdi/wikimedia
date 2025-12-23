@@ -1,0 +1,37 @@
+services:
+  wiki_db:
+    build: ./wiki_db
+    image: wikidb:1.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wiki}
+    volumes:
+      - wiki_db_data:/var/lib/mysql
+    networks:
+      - wiki_network
+
+  wiki_web:
+    build: ./wiki_app
+    image: wikiapp:1.0
+    ports:
+      - "8000:80"
+    networks:
+      - wiki_network
+    environment:
+      DB_HOST: wiki_db
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_NAME: wiki
+    volumes:
+      - ./wiki_app/wiki.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  wiki_db_data:
+
+networks:
+  wiki_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+
