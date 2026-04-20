@@ -23,4 +23,4 @@ VOLUME ["/usr/share/nginx/wiki", "/var/log/nginx"]
 EXPOSE 80
 
 # Lancement de PHP-FPM et Nginx
-CMD php-fpm && nginx -g "daemon off;"
+CMD php-fpm84 && nginx -g "daemon off;"
